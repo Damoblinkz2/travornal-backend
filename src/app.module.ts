@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
@@ -6,11 +8,16 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CitiesModule } from './cities/cities.module';
 
-const DB =
-  'mongodb+srv://adedamolatomide_db_user:jtV8BFNfQGO83RP9@cluster0.geyqb46.mongodb.net/?appName=Cluster0';
-
+if (!process.env.DB) {
+  throw new Error('DB environment variable is not defined');
+}
 @Module({
-  imports: [AuthModule, UserModule, CitiesModule, MongooseModule.forRoot(DB)],
+  imports: [
+    AuthModule,
+    UserModule,
+    CitiesModule,
+    MongooseModule.forRoot(process.env.DB),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,6 +1,12 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+
+if (!process.env.PORT) {
+  throw new Error('DB environment variable is not defined');
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +20,7 @@ async function bootstrap() {
       },
     }),
   );
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT || 3000);
 }
 
 bootstrap();

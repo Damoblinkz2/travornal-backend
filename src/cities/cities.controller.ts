@@ -1,17 +1,20 @@
-import { Controller, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req } from '@nestjs/common';
 import { CitiesService } from './cities.service';
+import { CitiesDto } from './dto';
 
 @Controller('cities')
 export class CitiesController {
   constructor(private citiesService: CitiesService) {}
 
   @Get('all')
-  signup() {
-    return this.citiesService.signup();
+  getCities() {
+    return this.citiesService.cities();
   }
 
   @Post('all')
-  login() {
-    return this.citiesService.login();
+  postCity(@Req() req: Request, @Body() dto: CitiesDto) {
+    const userId = '';
+    // const userId = req.user['_id'];
+    return this.citiesService.postCities(userId, dto);
   }
 }

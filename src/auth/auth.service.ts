@@ -20,12 +20,16 @@ export class AuthService {
     const hashedPass = await argon.hash(dto.password);
 
     //save the user in db
-    const createdUser = new this.usersModel({
-      email: dto.email,
-      passwords: hashedPass,
-    });
+    try {
+      const createdUser = new this.usersModel({
+        email: dto.email,
+        passwords: hashedPass,
+      });
 
-    return createdUser.save();
+      return createdUser.save();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   login() {}
