@@ -5,7 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 if (!process.env.PORT) {
-  throw new Error('DB environment variable is not defined');
+  throw new Error('Port environment variable is not defined');
 }
 
 async function bootstrap() {
