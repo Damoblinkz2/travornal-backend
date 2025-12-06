@@ -9,9 +9,17 @@ export class CitiesService {
   constructor(
     @InjectModel(Cities.name) private cityModel: Model<CitiesDocument>,
   ) {}
-  cities() {}
+  async getCities(user: string) {
+    const getAllCities = this.cityModel.find({ user }).populate('user');
+    return getAllCities;
+  }
 
-  postCities(userId: string, dto: CitiesDto): Promise<Cities> {
+  async getCity(id: string) {
+    const getCity = this.cityModel.findById(id).populate('user');
+    return getCity;
+  }
+
+  async postCities(userId: string, dto: CitiesDto): Promise<Cities> {
     //save the user in db
     const newDate = new Date();
 

@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Users, UsersDocument } from 'src/schemas/users.schema';
 import { AuthDto } from './dto';
+import { LoginDto } from './dto';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 
@@ -42,7 +43,7 @@ export class AuthService {
     return userWithoutPassword;
   }
 
-  async login(dto: AuthDto) {
+  async login(dto: LoginDto) {
     // Fetch user and include password (because select: false hides it)
     const user = await this.usersModel
       .findOne({ email: dto.email })

@@ -10,7 +10,7 @@ export class CitiesDto {
   country: string;
 
   @IsString()
-  emoji: string;
+  countryCode: string;
 
   @IsString()
   @IsOptional()

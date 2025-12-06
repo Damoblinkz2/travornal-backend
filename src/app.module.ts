@@ -14,7 +14,7 @@ if (!process.env.DB) {
 }
 @Module({
   imports: [
-    ConfigModule,
+    ConfigModule.forRoot({}),
     AuthModule,
     UserModule,
     CitiesModule,
