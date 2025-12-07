@@ -1,3 +1,7 @@
+/**
+ * Mongoose schema for Cities collection.
+ * Defines the structure and validation for city documents in the database.
+ */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Users } from './users.schema';
@@ -13,19 +17,22 @@ export class Cities {
   country: string;
 
   @Prop()
-  emoji: string;
+  countryCode: string;
 
   @Prop()
-  date: string;
+  date: string; // Date when the city was added
 
   @Prop()
-  notes: string;
+  notes: string; // Optional notes about the city
 
-  @Prop([{ type: { lat: Number, lng: Number } }])
-  position: { name: number; lng: number }[];
+  @Prop({
+    type: { lat: Number, lng: Number },
+    required: true,
+  })
+  position: { lat: number; lng: number };
 
   @Prop({ type: Types.ObjectId, ref: Users.name, required: true })
-  user: Types.ObjectId;
+  user: Types.ObjectId; // Reference to the user who added the city
 }
 
 export const CitiesSchema = SchemaFactory.createForClass(Cities);

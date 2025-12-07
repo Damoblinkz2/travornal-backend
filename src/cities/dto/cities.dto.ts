@@ -1,4 +1,20 @@
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+  IsNumber,
+} from 'class-validator';
+
+import { Type } from 'class-transformer';
+
+class PositionDto {
+  @IsNumber()
+  lat: number;
+
+  @IsNumber()
+  lng: number;
+}
 
 export class CitiesDto {
   @IsString()
@@ -17,6 +33,7 @@ export class CitiesDto {
   notes?: string;
 
   @IsNotEmpty()
-  @IsArray()
-  position: { lat: number; lng: number }[];
+  @ValidateNested()
+  @Type(() => PositionDto)
+  position: PositionDto;
 }

@@ -1,5 +1,9 @@
+/**
+ * JWT strategy for Passport authentication.
+ * Validates JWT tokens and extracts user information from payload.
+ */
 import * as dotenv from 'dotenv';
-dotenv.config();
+dotenv.config(); // Load environment variables
 
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
@@ -15,11 +19,16 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: secret,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extract JWT from Authorization header
+      secretOrKey: secret, // Secret key for verifying JWT
     });
   }
 
+  /**
+   * Validates the JWT payload and returns user information.
+   * @param payload - Decoded JWT payload containing user data.
+   * @returns Object with userId and email.
+   */
   validate(payload: { sub: string; email: string }): {
     userId: string;
     email: string;

@@ -1,3 +1,7 @@
+/**
+ * Authentication module.
+ * Configures authentication-related services, controllers, and dependencies.
+ */
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -9,10 +13,13 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
+    // Register the Users schema with Mongoose
     MongooseModule.forFeature([{ name: Users.name, schema: UsersSchema }]),
+    // Initialize Passport for authentication
     PassportModule,
+    // Configure JWT module with secret and expiration
     JwtModule.register({
-      secret: 'your-secret-key', // Use environment variable
+      secret: process.env.JWT_TOKEN,
       signOptions: { expiresIn: '60m' },
     }),
   ],
