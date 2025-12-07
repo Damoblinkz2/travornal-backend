@@ -67,11 +67,10 @@ export class CitiesService {
    */
   async postCities(userId: string, dto: CitiesDto): Promise<Cities> {
     try {
-      const newDate = new Date(); // Current timestamp
+      console.log(dto);
 
       const addCity = new this.cityModel({
         ...dto,
-        date: newDate,
         user: new Types.ObjectId(userId), // Convert userId to ObjectId
       });
 

@@ -21,7 +21,6 @@ export class CitiesController {
   @Get('all')
   getCities(@Req() req: Request) {
     const userId = req.user!.userId;
-    console.log(userId);
     return this.citiesService.getCities(userId);
   }
 
