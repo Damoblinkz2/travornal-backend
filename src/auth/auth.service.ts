@@ -46,7 +46,7 @@ export class AuthService {
       const createdUser = new this.usersModel({
         username: dto.username,
         email: dto.email,
-        passwords: hashedPass,
+        password: hashedPass,
       });
 
       const savedUser = await createdUser.save();
@@ -99,6 +99,30 @@ export class AuthService {
         throw error;
       }
       throw new InternalServerErrorException('Login failed');
+    }
+  }
+
+  /**
+   * Handles user token verification.
+   * Verifies JWT tokens for protected routes
+   * @returns Object with access_token.
+   * @param userId //check if user exist
+   * @throws UnauthorizedException for invalid credentials.
+   * @throws InternalServerErrorException for other errors.
+   */
+  async verify(userId: string) {
+    try {
+      //check if user exist
+      const user = await this.usersModel.findById(userId);
+
+      if (!user) {
+        return { status: 404 };
+      }
+
+      return { status: 200 };
+    } catch (err) {
+      throw new InternalServerErrorException('Verification failed');
+      console.error(err);
     }
   }
 }

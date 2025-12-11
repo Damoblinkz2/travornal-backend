@@ -26,6 +26,7 @@ export class CitiesService {
    */
   async getCities(user: string) {
     try {
+      console.log(user);
       const getAllCities = await this.cityModel.find({
         user: new Types.ObjectId(user),
       });

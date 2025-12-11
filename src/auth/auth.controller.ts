@@ -2,11 +2,12 @@
  * Authentication controller.
  * Handles HTTP requests for user signup and login.
  */
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req, UseGuards } from '@nestjs/common';
+import type { Request } from 'express';
 import { AuthService } from './auth.service';
 // import * as dto from './dto'; // Commented out alternative import
 import { AuthDto, LoginDto } from './dto/auth.dto';
-// import express from 'express'; // Commented out unused import
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -30,5 +31,17 @@ export class AuthController {
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
+  }
+
+  /**
+   * GET /auth/verify - Verify user token.
+   * @param  //userid
+   * @returns status code 200.
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @Get('verify')
+  verify(@Req() req: Request) {
+    const userId = req.user!.userId;
+    return this.authService.verify(userId);
   }
 }
